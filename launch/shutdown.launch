@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- Shutdown -->
+    <node name="shutdown"  pkg="mitch_v2_driver"     type="mitch_v2_shutdown"    output="screen"/>
+
+</launch>
