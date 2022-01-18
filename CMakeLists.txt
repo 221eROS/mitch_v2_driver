@@ -23,6 +23,10 @@ add_service_files(FILES
 		  StopTransmission.srv
 		  Shutdown.srv
 		  Disconnect.srv
+		  FirmwareVersion.srv
+		  BleName.srv
+		  DeviceId.srv
+		  ClockOffset.srv
 		  )
 
 generate_messages(DEPENDENCIES
@@ -74,9 +78,13 @@ add_executable(mitch_v2_shutdown "src/shutdown.cpp" ${SOURCES})
 add_dependencies(mitch_v2_shutdown ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(mitch_v2_shutdown ${catkin_LIBRARIES} ${MITCH_V2_LIB} ${SERIAL_LIB} ${Boost_LIBRARIES}) 
 
-add_executable(battery "src/battery.cpp" ${SOURCES})
-add_dependencies(battery ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(battery ${catkin_LIBRARIES} ${MITCH_V2_LIB} ${SERIAL_LIB} ${Boost_LIBRARIES}) 
+add_executable(mitch_v2_battery "src/battery.cpp" ${SOURCES})
+add_dependencies(mitch_v2_battery ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(mitch_v2_battery ${catkin_LIBRARIES} ${MITCH_V2_LIB} ${SERIAL_LIB} ${Boost_LIBRARIES}) 
+
+add_executable(mitch_v2_firmware_version "src/firmware_version.cpp" ${SOURCES})
+add_dependencies(mitch_v2_firmware_version ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(mitch_v2_firmware_version ${catkin_LIBRARIES} ${MITCH_V2_LIB} ${SERIAL_LIB} ${Boost_LIBRARIES}) 
 
 #add_executable(start_transmission "src/start_transmission.cpp" ${SOURCES})
 #add_dependencies(start_transmission ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

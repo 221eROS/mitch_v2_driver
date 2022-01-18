@@ -22,17 +22,20 @@ int main(int argc, char** argv)
 
 	vector<ros::Subscriber> sub_vect;
 
-	//ros::Subscriber stream_sub = n.subscribe<muse_v2_driver::Transmission>("start_transmission", 1, boost::bind(&muse_v2_driver::Stream::StreamRawData, &stream, _1, &muse));
+	//ros::Subscriber stream_sub = n.subscribe<mitch_v2_driver::Transmission>("start_transmission", 1, boost::bind(&mitch_v2_driver::Stream::StreamRawData, &stream, _1, &mitch_v2));
 	//sub_vect.push_back(stream_sub);
 
-	//ros::ServiceServer stop_transmission_srv = n.advertiseService<muse_v2_driver::StopTransmission::Request, muse_v2_driver::StopTransmission::Response>
-	//	("stop_transmission", boost::bind(&muse_v2_driver::Muse::stopTransmission, &muse, _1, _2, &muse));
+	//ros::ServiceServer stop_transmission_srv = n.advertiseService<mitch_v2_driver::StopTransmission::Request, mitch_v2_driver::StopTransmission::Response>
+	//	("stop_transmission", boost::bind(&mitch_v2_driver::Muse::stopTransmission, &mitch_v2, _1, _2, &mitch_v2));
 
 	ros::ServiceServer shutdown_srv = n.advertiseService<mitch_v2_driver::Shutdown::Request, mitch_v2_driver::Shutdown::Response>
 		("shutdown", boost::bind(&mitch_v2_driver::MitchV2::shutdown, &mitch_v2, _1, _2, &mitch_v2, sub_vect));
 
 	ros::ServiceServer battery_srv = n.advertiseService<mitch_v2_driver::Battery::Request, mitch_v2_driver::Battery::Response>
 		("battery", boost::bind(&mitch_v2_driver::MitchV2Request::getBattery, &request, _1, _2, &mitch_v2));
+
+	ros::ServiceServer firmware_srv = n.advertiseService<mitch_v2_driver::FirmwareVersion::Request, mitch_v2_driver::FirmwareVersion::Response>
+		("firmware_version", boost::bind(&mitch_v2_driver::MitchV2Request::getFirmwareVersion, &request, _1, _2, &mitch_v2));
 
 
 	ROS_INFO("Mitch V2 ready.");

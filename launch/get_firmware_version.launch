@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Available Commands -->	
+	<arg name="get_firmware_version"	default="true"		/>
+	
+	<param name="get_firmware_version"		type="bool"         value="$(arg get_firmware_version)"			/>
+
+	<!-- Command publisher -->
+    <node name="firmware_version"  pkg="mitch_v2_driver"     type="mitch_v2_firmware_version"    output="screen"/>
+
+
+</launch>

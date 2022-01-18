@@ -1,0 +1,3 @@
+bool get_firmware_version
+----
+string firmware_version
