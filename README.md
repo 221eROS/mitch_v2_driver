@@ -126,4 +126,12 @@ Assuming the ROS node of your MITCH V2 sensor is active [step 3(a)], launch the 
 $ roslaunch mitch_v2_driver shutdown.launch
 ```
 
+### c) Battery charge and voltage
+
+Assuming the ROS node of your MITCH V2 sensor is active [step 3(a)], type the following command from your catkin workspace:
+```sh
+$ roslaunch v battery.launch
+```
+The node will send back the battery charge, its voltage, or both depending on whether the arguments *charge* and *voltage* are set to *true*.
+
 

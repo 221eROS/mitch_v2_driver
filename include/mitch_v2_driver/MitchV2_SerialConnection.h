@@ -45,6 +45,7 @@ namespace mitch_v2_driver {
 		bool shutdown(Shutdown::Request& req, Shutdown::Response& res, MitchV2* mitch_v2, std::vector<ros::Subscriber>& sub_vect);
 		bool disconnect(Disconnect::Request& req, Disconnect::Response& res, MitchV2* mitch_v2, std::vector<ros::Subscriber>& sub_vect);
 
+
 	};
 }
 

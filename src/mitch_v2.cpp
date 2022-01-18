@@ -1,9 +1,5 @@
-//#include <mitch_v2_driver/Stream.h>
+#include <mitch_v2_driver/MitchV2_Request.h>
 #include <mitch_v2_driver/MitchV2_SerialConnection.h>
-//#include <mitch_v2_driver/Miscellaneous.h>
-//#include <mitch_v2_driver/Configuration.h>
-//#include <mitch_v2_driver/Calibration.h>
-//#include <mitch_v2_driver/Memory.h>
 
 int main(int argc, char** argv)
 {
@@ -22,11 +18,7 @@ int main(int argc, char** argv)
 	if (!n.getParam("publisher_queue_size", publisher_queue_size))
 		ROS_WARN("No publisher_queue_size parameter found on server. Use default one.");
 
-	//mitch_v2_driver::Stream stream(n, publisher_queue_size);
-	//mitch_v2_driver::Miscellaneous misc;
-	//mitch_v2_driver::Configuration config;
-	//mitch_v2_driver::Calibration calib;
-	//mitch_v2_driver::Memory mem;
+	mitch_v2_driver::MitchV2Request request;
 
 	vector<ros::Subscriber> sub_vect;
 
@@ -39,23 +31,11 @@ int main(int argc, char** argv)
 	ros::ServiceServer shutdown_srv = n.advertiseService<mitch_v2_driver::Shutdown::Request, mitch_v2_driver::Shutdown::Response>
 		("shutdown", boost::bind(&mitch_v2_driver::MitchV2::shutdown, &mitch_v2, _1, _2, &mitch_v2, sub_vect));
 
-	//ros::ServiceServer battery_srv = n.advertiseService<muse_v2_driver::Battery::Request, muse_v2_driver::Battery::Response>
-	//	("battery", boost::bind(&muse_v2_driver::Miscellaneous::getBattery, &misc, _1, _2, &muse));
-
-	//ros::ServiceServer get_config_params_srv = n.advertiseService<muse_v2_driver::GetConfigurationParams::Request, muse_v2_driver::GetConfigurationParams::Response>
-	//	("get_configuration_params", boost::bind(&muse_v2_driver::Configuration::getConfigurationParams, &config, _1, _2, &muse));
-
-	//ros::ServiceServer set_config_params_srv = n.advertiseService<muse_v2_driver::SetConfigurationParams::Request, muse_v2_driver::SetConfigurationParams::Response>
-	//	("set_configuration_params", boost::bind(&muse_v2_driver::Configuration::setConfigurationParams, &config, _1, _2, &muse));
-
-	//ros::ServiceServer get_calib_params_srv = n.advertiseService<muse_v2_driver::GetCalibrationParams::Request, muse_v2_driver::GetCalibrationParams::Response>
-	//	("get_calibration_params", boost::bind(&muse_v2_driver::Calibration::getCalibrationParams, &calib, _1, _2, &muse));
-
-	//ros::ServiceServer logger_srv = n.advertiseService<muse_v2_driver::MemoryManagement::Request, muse_v2_driver::MemoryManagement::Response>
-	//	("logger", boost::bind(&muse_v2_driver::Memory::logger, &mem, _1, _2, &muse));
+	ros::ServiceServer battery_srv = n.advertiseService<mitch_v2_driver::Battery::Request, mitch_v2_driver::Battery::Response>
+		("battery", boost::bind(&mitch_v2_driver::MitchV2Request::getBattery, &request, _1, _2, &mitch_v2));
 
 
-	ROS_INFO("Mitch ready.");
+	ROS_INFO("Mitch V2 ready.");
 
 	ros::spin();
 
