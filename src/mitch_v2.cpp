@@ -13,7 +13,8 @@ int main(int argc, char** argv)
 
 	mitch_v2_driver::MitchV2 mitch_v2(n);
 
-	ROS_INFO("Port name: %s", mitch_v2.params.port_name);
+	std::string port = mitch_v2.params.port_name;
+	ROS_INFO("Port name: %s", port.c_str());
 	ROS_INFO("Baudrate: %d", mitch_v2.params.baudrate);
 
 	int publisher_queue_size;
