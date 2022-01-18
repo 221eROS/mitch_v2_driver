@@ -1,6 +1,6 @@
 #include <mitch_v2_driver/MitchV2_SerialConnection.h>
 
-void mitch_v2_driver::Mitch::setupParams(ros::NodeHandle& node) {
+void mitch_v2_driver::MitchV2::setupParams(ros::NodeHandle& node) {
 
 	if (!node.getParam("frame_id", params.frame_id))
 		ROS_WARN("No frame_id parameter found on server. Use default one.");
@@ -21,26 +21,26 @@ void mitch_v2_driver::Mitch::setupParams(ros::NodeHandle& node) {
 		params.timeout = (Timeout)(temp_timeout);
 }
 
-bool mitch_v2_driver::Mitch::stopTransmission(StopTransmission::Request& req, StopTransmission::Response& res, Mitch* mitch)
+bool mitch_v2_driver::MitchV2::stopTransmission(StopTransmission::Request& req, StopTransmission::Response& res, MitchV2* mitch_v2)
 {
 	ROS_INFO("request: stop_transmission=%s", req.stop_transmission ? "true" : "false");
 
 	if (req.stop_transmission) {
-		mitch->serial->stopTransmission();
+		mitch_v2->serial->stopTransmission();
 		res.transmission_stopped = true;
 	}
 
 	return res.transmission_stopped;
 }
 
-bool mitch_v2_driver::Mitch::shutdown(Shutdown::Request& req, Shutdown::Response& res, Mitch* mitch, std::vector<ros::Subscriber>& sub_vect)
+bool mitch_v2_driver::MitchV2::shutdown(Shutdown::Request& req, Shutdown::Response& res, MitchV2* mitch_v2, std::vector<ros::Subscriber>& sub_vect)
 {
 	ROS_INFO("request: shutdown=%s", req.shutdown ? "true" : "false");
 
 	if (req.shutdown) {
 		for (auto& s : sub_vect)
 			s.shutdown();
-		mitch->serial->shutdown();
+		mitch_v2->serial->shutdown();
 		res.off = true;
 		ros::shutdown();
 	}
@@ -48,7 +48,7 @@ bool mitch_v2_driver::Mitch::shutdown(Shutdown::Request& req, Shutdown::Response
 	return res.off;
 }
 
-bool mitch_v2_driver::Mitch::disconnect(Disconnect::Request& req, Disconnect::Response& res, Mitch* mitch, std::vector<ros::Subscriber>& sub_vect)
+bool mitch_v2_driver::MitchV2::disconnect(Disconnect::Request& req, Disconnect::Response& res, MitchV2* mitch_v2, std::vector<ros::Subscriber>& sub_vect)
 {
 	ROS_INFO("request: disconnect=%s", req.disconnect ? "true" : "false");
 
@@ -56,7 +56,7 @@ bool mitch_v2_driver::Mitch::disconnect(Disconnect::Request& req, Disconnect::Re
 		for (auto& s : sub_vect)
 			s.shutdown();
 
-		mitch->serial->disconnect();
+		mitch_v2->serial->disconnect();
 		res.disconnected = true;
 	}
 

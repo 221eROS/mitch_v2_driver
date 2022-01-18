@@ -11,10 +11,10 @@ int main(int argc, char** argv)
 
 	ros::NodeHandle n;
 
-	mitch_v2_driver::Mitch mitch(n);
+	mitch_v2_driver::MitchV2 mitch_v2(n);
 
-	ROS_INFO("Port name: %s", mitch.params.port_name);
-	ROS_INFO("Baudrate: %d", mitch.params.baudrate);
+	ROS_INFO("Port name: %s", mitch_v2.params.port_name);
+	ROS_INFO("Baudrate: %d", mitch_v2.params.baudrate);
 
 	int publisher_queue_size;
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 	//	("stop_transmission", boost::bind(&muse_v2_driver::Muse::stopTransmission, &muse, _1, _2, &muse));
 
 	ros::ServiceServer shutdown_srv = n.advertiseService<mitch_v2_driver::Shutdown::Request, mitch_v2_driver::Shutdown::Response>
-		("shutdown", boost::bind(&mitch_v2_driver::Mitch::shutdown, &mitch, _1, _2, &mitch, sub_vect));
+		("shutdown", boost::bind(&mitch_v2_driver::MitchV2::shutdown, &mitch_v2, _1, _2, &mitch_v2, sub_vect));
 
 	//ros::ServiceServer battery_srv = n.advertiseService<muse_v2_driver::Battery::Request, muse_v2_driver::Battery::Response>
 	//	("battery", boost::bind(&muse_v2_driver::Miscellaneous::getBattery, &misc, _1, _2, &muse));
